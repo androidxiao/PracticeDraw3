@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -43,12 +44,11 @@ public class Practice13GetTextBoundsView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        canvas.drawRect(50, top, getWidth() - 50, bottom, paint1);
+//        canvas.drawRect(50, top, getWidth() - 50, bottom, paint1);
 
         // 使用 Paint.getTextBounds() 计算出文字的显示区域
         // 然后计算出文字的绘制位置，从而让文字上下居中
         // 这种居中算法的优点是，可以让文字精准地居中，分毫不差
-
         int middle = (top + bottom) / 2;
         canvas.drawText(text1, 100, middle, paint2);
         canvas.drawText(text2, 200, middle, paint2);
@@ -56,5 +56,15 @@ public class Practice13GetTextBoundsView extends View {
         canvas.drawText(text4, 400, middle, paint2);
         canvas.drawText(text5, 500, middle, paint2);
         canvas.drawText(text6, 600, middle, paint2);
+
+        String s = text1 + text2 + text3 + text4 + text5 + text6;
+        Rect rectF = new Rect();
+        paint2.getTextBounds(text1+text2+text3+text4+text5+text6,0,s.length(),rectF);
+        rectF.left+=50;
+        rectF.top=middle;
+        rectF.right=600;
+        rectF.bottom+=middle;
+        paint2.setStyle(Paint.Style.STROKE);
+        canvas.drawRect(rectF,paint2);
     }
 }
